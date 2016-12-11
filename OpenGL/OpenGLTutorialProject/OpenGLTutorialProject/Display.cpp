@@ -15,6 +15,8 @@ Display::Display(int width, int height, const std::string& title)
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 	//バッファを二つ用意、交代で表示
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
+
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	//C言語でできているので、stringをC言語化する、OpenGLで開く
@@ -31,6 +33,8 @@ Display::Display(int width, int height, const std::string& title)
 	}
 
 	m_isClosed = false;
+
+	glEnable(GL_DEPTH_TEST);
 }
 
 //デストラクタ
@@ -69,5 +73,6 @@ bool Display::IsClosed()
 void Display::Clear(float r, float g, float b, float a)
 {
 	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 }
